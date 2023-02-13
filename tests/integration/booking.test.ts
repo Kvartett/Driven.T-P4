@@ -232,7 +232,7 @@ describe("PUT /booking", () => {
         const response = await server.put(`/booking/${booking.id}`).set("Authorization", `Bearer ${token}`).send(body);
 
         expect(response.status).toBe(httpStatus.OK);
-        expect(response.body).toEqual(booking.id);
+        expect(response.text).toEqual(booking.id.toString());
      
     });
 
