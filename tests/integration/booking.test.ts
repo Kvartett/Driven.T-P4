@@ -64,13 +64,11 @@ describe("GET /booking", () => {
       const user = await createUser();
       const token = await generateValidToken(user);
 
-      try {
+    
         const response = await server.get("/booking").set("Authorization", `Bearer ${token}`);
 
         expect(response.status).toBe(httpStatus.NOT_FOUND);
-      } catch (err) {
-        console.log(err);
-      }
+   
     });
   });
 });
@@ -112,13 +110,10 @@ describe("POST /booking", () => {
         roomId: room.id,
       };
 
-      try {
         const response = await server.post("/booking").set("Authorization", `Bearer ${token}`).send(body);
         
         expect(response.status).toBe(httpStatus.OK);
-      } catch (err) {
-        console.log(err);
-      }
+    
     });
 
     it("should respond with 403 if user have remote ticket", async () => {
@@ -188,13 +183,11 @@ describe("POST /booking", () => {
         roomId: 9999999,
       };
 
-      try {
+  
         const response = await server.post("/booking").set("Authorization", `Bearer ${token}`).send(body);
 
         expect(response.status).toBe(httpStatus.NOT_FOUND);
-      } catch (err) {
-        console.log(err);
-      }
+     
     });
   });
 });
@@ -235,14 +228,12 @@ describe("PUT /booking", () => {
         roomId: room2.id,
       };
 
-      try {
+    
         const response = await server.put(`/booking/${booking.id}`).set("Authorization", `Bearer ${token}`).send(body);
 
         expect(response.status).toBe(httpStatus.OK);
         expect(response.body).toEqual(booking.id);
-      } catch (err) {
-        console.log(err);
-      }
+     
     });
 
     it("should respond with 403 if user does not have a booking", async () => {
@@ -285,13 +276,11 @@ describe("PUT /booking", () => {
         roomId: 9999999,
       };
 
-      try {
+    
         const response = await server.put(`/booking/${faker.lorem}`).set("Authorization", `Bearer ${token}`).send(body);
 
         expect(response.status).toBe(httpStatus.NOT_FOUND);
-      } catch (err) {
-        console.log(err);
-      }
+    
     });
   });
 });
