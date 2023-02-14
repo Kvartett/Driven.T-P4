@@ -19,6 +19,12 @@ async function getBooking(userId: number) {
 }
 
 async function createBooking(userId: number, roomId: number) {
+  const roomExist = await bookingRepository.findRoom(roomId);
+
+  if (!roomExist) {
+    throw notFoundError();
+  }
+
   const enrollment = await enrollmentRepository.findWithAddressByUserId(userId);
   if (!enrollment) {
     throw notFoundError();
@@ -28,12 +34,6 @@ async function createBooking(userId: number, roomId: number) {
 
   if (!ticket || ticket.status === "RESERVED" || ticket.TicketType.isRemote || !ticket.TicketType.includesHotel) {
     throw forbiddenError();
-  }
-
-  const roomExist = await bookingRepository.findRoom(roomId);
-
-  if (!roomExist) {
-    throw notFoundError();
   }
 
   const roomBooking = await bookingRepository.findManyBookingRoom(roomId);

@@ -18,8 +18,6 @@ async function findManyBookingRoom(roomId: number) {
 }
 
 async function createBooking(userId: number, roomId: number) {
-  console.log("userId", "roomId");
-  console.log(userId, roomId);
   return prisma.booking.create({
     data: {
       userId,
